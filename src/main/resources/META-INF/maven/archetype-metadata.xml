@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Descriptor del arquetipo: que propiedades pide al generar y que archivos copia.
+
+  filtered="true"  -> el archivo pasa por Velocity y se reemplazan ${entidad}, ${puerto}, etc.
+  packaged="true"  -> el archivo se ubica bajo la carpeta del paquete (com/foro/xxx/).
+-->
+<archetype-descriptor
+        xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 https://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd"
+        name="microservicio-arquetipo">
+
+    <requiredProperties>
+        <!-- Prefijo de la clase principal: ForoModeracion -> ForoModeracionApplication -->
+        <requiredProperty key="nombreClase"/>
+        <!-- Entidad de ejemplo con su CRUD completo, en singular y PascalCase: Norma -->
+        <requiredProperty key="entidad"/>
+        <!-- Ruta REST de la entidad, en plural: normas -> /api/normas -->
+        <requiredProperty key="recurso"/>
+        <!-- Tabla Oracle de la entidad, en mayusculas: NORMA -->
+        <requiredProperty key="tabla"/>
+        <requiredProperty key="puerto">
+            <defaultValue>8080</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="descripcion">
+            <defaultValue>Microservicio del Sistema de Foros en Linea</defaultValue>
+        </requiredProperty>
+        <!--
+          El empaquetador del arquetipo descarta los .gitignore. Se guarda como
+          __gitignore__ y esta propiedad lo renombra al generar el proyecto.
+        -->
+        <requiredProperty key="gitignore">
+            <defaultValue>.gitignore</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="version">
+            <defaultValue>1.0.0</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
+
+    <fileSets>
+        <!-- Codigo fuente: se ubica bajo el paquete y se filtra -->
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+            <directory>src/main/java</directory>
+            <includes><include>**/*.java</include></includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+            <directory>src/test/java</directory>
+            <includes><include>**/*.java</include></includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory>src/main/resources</directory>
+            <includes><include>**/*.properties</include></includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory>src/test/resources</directory>
+            <includes><include>**/*.properties</include></includes>
+        </fileSet>
+
+        <!-- Scripts SQL de la tabla de ejemplo: llevan el nombre de la tabla -->
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory>scripts</directory>
+            <includes><include>*.sql</include></includes>
+        </fileSet>
+        <!-- Scripts de ejecucion: se copian tal cual -->
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>scripts</directory>
+            <includes>
+                <include>*.sh</include>
+                <include>*.java</include>
+            </includes>
+        </fileSet>
+
+        <!-- Raiz del proyecto -->
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>README.md</include>
+                <include>Dockerfile</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory></directory>
+            <includes>
+                <include>__gitignore__</include>
+                <include>.dockerignore</include>
+                <include>mvnw</include>
+                <include>mvnw.cmd</include>
+                <include>CONTRIBUTING.md</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>.mvn</directory>
+            <includes><include>**/*</include></includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>.github</directory>
+            <includes><include>**/*</include></includes>
+        </fileSet>
+    </fileSets>
+</archetype-descriptor>
