@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Arquetipo Maven de los microservicios del Sistema de Foros en Linea.
+
+  Empaqueta como "maven-archetype": su contenido (src/main/resources/archetype-resources)
+  es la plantilla de un microservicio Spring Boot 3 con la estructura en capas,
+  la validacion del JWT, los perfiles local/oracle, el Dockerfile y la
+  integracion continua que comparten todos los servicios del foro.
+
+  Instalar en el repositorio local:   ./mvnw clean install
+  Generar un microservicio:           ver README.md
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.foro</groupId>
+    <artifactId>microservicio-arquetipo</artifactId>
+    <version>1.0.0</version>
+    <packaging>maven-archetype</packaging>
+
+    <name>microservicio-arquetipo</name>
+    <description>Arquetipo de microservicio Spring Boot 3 + Oracle Cloud + JWT para el Sistema de Foros en Linea</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <archetype.version>3.4.0</archetype.version>
+    </properties>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>${archetype.version}</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-archetype-plugin</artifactId>
+                <version>${archetype.version}</version>
+            </plugin>
+            <!--
+              Sin esto el plugin de recursos descarta los archivos que empiezan
+              con punto (.gitignore, .dockerignore, .github) y el proyecto
+              generado llegaria sin ellos.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <addDefaultExcludes>false</addDefaultExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
